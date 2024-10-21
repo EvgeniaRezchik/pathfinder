@@ -2,26 +2,25 @@
 #include "../inc/pathfinder.h"
 
 void mx_pave_ways(t_island **il, t_path *p, int l, int c,
-		  char *d, char *ds, char *s, int i) {
-    if (mx_strcmp((*il)[mx_index(d, *il, c)].name, p[i].first) == 0
-	&& (*il)[mx_index(p[i].second, *il, c)].weight == (*il)[mx_index(d, *il, c)].weight + p[i].length) {
-        if (mx_strcmp((*il)[mx_index(p[i].second, *il, c)].name, ds) == 0) {
-	    (*il)[mx_index(p[i].second, *il, c)].usage = 0;
-	    mx_print_block(*il, p, l, c, s, ds);
-	    (*il)[mx_index(p[i].second, *il, c)].usage = -1;
+		  int d, int ds, int s, int i, int j, int id) {
+    if ((*il)[d].id == p[j].id1 && (*il)[i].id == p[j].id2
+	&& (*il)[p[j].id2].weight == (*il)[d].weight + p[j].length) {
+        if ((*il)[p[j].id2].id == ds) {
+	    (*il)[p[j].id2].usage = id + 1;
+	    mx_print_block(*il, p, l, s, ds);
+	    (*il)[p[j].id2].usage = -1;
 	}
 	else
-	    mx_build_paths(il, p, l, c, p[i].second, ds, s);
+	    mx_build_paths(il, p, l, c, p[j].id2, ds, s, id + 1);
     }
-    else if (mx_strcmp((*il)[mx_index(d, *il, c)].name, p[i].second) == 0
-	     && (*il)[mx_index(p[i].first, *il, c)].weight == (*il)[mx_index(d, *il, c)].weight + p[i].length) {
-        if (mx_strcmp((*il)[mx_index(p[i].first, *il, c)].name, ds) == 0) {
-	    (*il)[mx_index(p[i].first, *il, c)].usage = 0;
-	    mx_print_block(*il, p, l, c, s, ds);
-	    (*il)[mx_index(p[i].first, *il, c)].usage = -1;
+    else if ((*il)[d].id == p[j].id2 && (*il)[i].id == p[j].id1
+	     && (*il)[p[j].id1].weight == (*il)[d].weight + p[j].length) {
+        if ((*il)[p[j].id1].id == ds) {
+	    (*il)[p[j].id1].usage = id + 1;
+	    mx_print_block(*il, p, l, s, ds);
+	    (*il)[p[j].id1].usage = -1;
 	}
 	else
-	    mx_build_paths(il, p, l, c, p[i].first, ds, s);
+	    mx_build_paths(il, p, l, c, p[j].id1, ds, s, id + 1);
     }
 }
-
