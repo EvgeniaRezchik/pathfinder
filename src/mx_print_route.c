@@ -2,24 +2,21 @@
 #include "../inc/pathfinder.h"
 
 void mx_print_route(t_island *il, t_path *p, int l,
-		    int c, char *d, char *ds) {
-    int curr = mx_index(d, il, c);
+		    int d, int ds) {
+    int curr = d;
     bool found = false;
+    int id = 1;
 
     while (true) {
         found = false;
 	for (int i = 0; i < l && !found; i += 1) {
-	    if ((mx_strcmp(il[curr].name, p[i].first) == 0
-		&& il[mx_index(p[i].second, il, c)].usage != -1
-		&& il[mx_index(p[i].second, il, c)].weight == il[curr].weight + p[i].length)
-		|| (mx_strcmp(il[curr].name, p[i].second) == 0
-		&& il[mx_index(p[i].first, il, c)].usage != -1
-		&& il[mx_index(p[i].first, il, c)].weight == il[curr].weight + p[i].length)) {
+	    if ((il[curr].id == p[i].id1 && il[p[i].id2].usage == id)
+		|| (il[curr].id == p[i].id2 && il[p[i].id1].usage == id)) {
 	        found = true;
-		if (mx_print_way(il, p, ds, c, &curr, i) == 1)
+		id += 1;
+		if (mx_print_way(il, p, ds, &curr, i) == 1)
 		    return;
 	    }
 	}
     }
 }
-
