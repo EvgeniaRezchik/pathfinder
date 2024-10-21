@@ -19,4 +19,3 @@ int mx_read_second_name(int line, char **s, int file, t_path **paths) {
     mx_strdel(s);
     return c;
 }
-
