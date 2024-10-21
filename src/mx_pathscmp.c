@@ -4,13 +4,12 @@
 bool mx_pathscmp(t_path *paths, int line) {
     for (int i = 0; i < line - 2; i += 1) {
         for (int j = i + 1; j < line - 2; j += 1) {
-	    if ((mx_strcmp(paths[i].first, paths[j].first) == 0
-		&& mx_strcmp(paths[i].second, paths[j].second) == 0)
-		|| (mx_strcmp(paths[i].first, paths[j].second) == 0
-		&& mx_strcmp(paths[i].second, paths[j].first) == 0))
+	    if ((paths[i].id1 == paths[j].id1
+		&& paths[i].id2 == paths[j].id2)
+		|| (paths[i].id1 == paths[j].id2
+		&& paths[i].id2 == paths[j].id1))
 	        return false;
 	}
     }
     return true;
 }
-
