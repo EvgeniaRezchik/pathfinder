@@ -1,23 +1,18 @@
 #include "../libmx/inc/libmx.h"
 #include "../inc/pathfinder.h"
 
-int mx_print_way(t_island *il, t_path *p, char *ds, int c, int *curr, int i) {
-    if ((mx_strcmp(il[*curr].name, p[i].first) == 0
-	&& mx_strcmp(p[i].second, ds) == 0)
-	|| (mx_strcmp(il[*curr].name, p[i].second) == 0
-	&& mx_strcmp(p[i].first, ds) == 0)) {
+int mx_print_way(t_island *il, t_path *p, int ds, int *curr, int i) {
+    if ((il[*curr].id == p[i].id1 && p[i].id2 == ds)
+	|| (il[*curr].id == p[i].id2 && p[i].id1 == ds)) {
         mx_printstr(il[*curr].name);
 	mx_printstr(" -> ");
-	mx_printstr(ds);
+	mx_printstr(il[ds].name);
 	return 1;
     }
     else {
         mx_printstr(il[*curr].name);
 	mx_printstr(" -> ");
-	*curr = mx_strcmp(il[*curr].name, p[i].first) == 0 ?
-	       mx_index(p[i].second, il, c) :
-	       mx_index(p[i].first, il, c);
+	*curr = il[*curr].id == p[i].id1 ? p[i].id2 : p[i].id1;
 	return 0;
     }
 }
-
