@@ -2,10 +2,13 @@
 #include "../inc/pathfinder.h"
 
 void mx_build_paths(t_island **il, t_path *p, int l,
-		    int c, char *d, char *ds, char *s) {
-    (*il)[mx_index(d, *il, c)].usage = 0;
-    for (int i = 0; i < l; i += 1)
-        mx_pave_ways(il, p, l, c, d, ds, s, i);
-    (*il)[mx_index(d, *il, c)].usage = -1;
+		    int c, int d, int ds, int s, int i) {
+    (*il)[d].usage = i;
+    for (int j = 0; j < c; j += 1) {
+        if (j != d) {
+	    for (int k = 0; k < l; k += 1)
+	        mx_pave_ways(il, p, l, c, d, ds, s, j, k, i);
+	}
+    }
+    (*il)[d].usage = -1;
 }
-
