@@ -64,7 +64,7 @@ static void handling_errors_p4(t_island **i, int *c,
 		               t_path **p, int l, int ic) {
     long int sum = 0;
 
-    mx_fill_islands(i, c, *p, l);
+    mx_fill_islands(i, c, p, l);
     if (*c != ic)
         mx_error6(p, l, i, *c);
     if (!mx_pathscmp(*p, l))
@@ -74,4 +74,3 @@ static void handling_errors_p4(t_island **i, int *c,
     if (sum > 2147483647)
         mx_error8(p, l, i, *c);
 }
-
